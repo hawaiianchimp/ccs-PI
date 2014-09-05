@@ -1,0 +1,49 @@
+{
+  "name": "PI",
+  "version": "0.0.1",
+  "description": "Product Information (PI) Event for getting product information",
+  "keywords": [
+    "CCS",
+    "CBS",
+    "PI"
+  ],
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/PI.js",
+  "repository": {
+    "type": "git"
+  },
+  "author": {
+    "name": "Sean Thomas Burke",
+    "email": "sean@seantburke.com",
+    "url": "http://www.seantburke.com"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha test"
+  },
+  "maintainers": [
+    {
+      "name": "Sean Thomas Burke",
+      "email": "sean@seantburke.com",
+      "url": "http://www.seantburke.com"
+    }
+  ],
+  "directories": {
+    "lib": "./lib",
+    "test": "./test"
+  },
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "devDependencies": {
+    "mocha": "^1.21.4",
+    "should": "^4.0.4"
+  },
+  "readme": "##Product Information(PI) Event\n\nGet the Product Information for Parter sites.\n\n####Simple Implementation\n\n    var PI = require(\"PI\");\n\n\tsitemap.getSites(\"http://www.cbs.com/sitemaps/show/show_siteMap_index.xml\", function(err, sites){\n\t\tif(!err)console.log(sites);\n\t\telse console.log(error);\n\t});\n\n",
+  "readmeFilename": "README.md",
+  "_id": "PI@0.0.1",
+  "_shasum": "ed946c07d6ef2ab1476efd9d92fde220c190948a",
+  "_from": "../PI/"
+}
