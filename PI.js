@@ -5,9 +5,9 @@
  * 
  * Sean Burke 8/7/14
  */
-http = require("http") || null;
 
-var	PI = function(input, document)
+(function(){
+	PI = function(input)
 	{
 		/* 
 		 * initialize the PI Object
@@ -15,8 +15,6 @@ var	PI = function(input, document)
 
 		this.input = input;
 		this.product = {};
-		this.id = 0;
-		this.etype = "PI";
 
 		if(input)
 		{
@@ -34,7 +32,6 @@ var	PI = function(input, document)
 			           this.product.isbn = input.isbn;
 			          this.product.MfgId = input.MfgId;
 			          this.product.MfgPn = input.MfgPn;
-			           this.product.Host = input.Host;
 			      this.product.userAgent = input.userAgent;
 			         this.product.ProdId = input.ProdId;
 			         this.product.ProdMf = input.ProdMf;
@@ -73,6 +70,22 @@ var	PI = function(input, document)
 		this.product.competitorContent = this.getCompetitorsWithContent();
 
 		/* 
+		 * send the PI event using ccs_cc_log variable
+		 */
+
+		this.send = function(){
+			var _pie = this;
+			if(ccs_cc_log)
+			{
+				ccs_cc_log.sendEvent("PI", _pie.getParamString(), window.location.href);
+			}
+			else
+			{
+				console.log("ccs_cc_log variable not found");
+			}
+		};
+
+		/* 
 		 * returns the parameters as a URL Query String
 		 */
 
@@ -84,40 +97,5 @@ var	PI = function(input, document)
 			}	
 			return output.substring(1);
 		};
-
-		/* 
-		 * send the PI event using http	
-		 */
-
-		this.send = function(){
-			this.id++;
-			var options = {
-				method: "GET",
-				hostname: 'ws.cnetcontent.com',
-				path: '/log?Et=' + this.etype + '&PId=' + this.genGuid() + '&_LogId=' + this.id + '&' + this.getParamString()
-			}
-			var req = http.request(options, function(res) {
-			  res.on('data', function (chunk) {
-			    console.log("Success:".success, options.method, options.hostname + options.path)
-			  });
-			});
-
-			req.on('error', function(e) {
-			  console.log('Error:'.error, (""+e.message).error);
-			});
-			req.end();
-		};
-
-		this.genGuid = function () {
-			var result, i, j;
-			result = '';
-			for (j = 0; j < 32; j++) {
-				i = Math.floor(Math.random() * 16).toString(16);
-				result = result + i;
-			}
-			return result;
-		};
 	};
-
-
-module.exports = PI;
+})();
